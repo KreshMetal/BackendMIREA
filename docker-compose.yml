@@ -11,8 +11,6 @@ services:
             - ./server:/var/www/html/
         ports:
             - 8000:80
-        links:
-          - db
             
     db:
         container_name: db
