@@ -14,7 +14,9 @@ services:
             
     db:
         container_name: db
-        image: mysql:5.7
+        build:
+            context: ./db
+            dockerfile: Dockerfile
         restart: always
         volumes:
             - ./db/init.sql:/var/www/sql/init.sql
