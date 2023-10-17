@@ -11,25 +11,21 @@
     SecondName:<br>
     <input type="text" name="secondname"> <br>
     <br><br>
-    <input type="submit" name="update" value="update">
+    <input type="submit" name="submit" value="submit">
   </fieldset>
 </form>
 </body>
 </html>
-
 <?php
 $mysqli = new mysqli("db", "user", "password", "appDB");
-  if (isset($_POST['update'])) {
-	$id = $_GET['id'];
+  if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $secondname = $_POST['secondname'];
-    $sql = "UPDATE `users` SET `name` = '$name', `surname` = '$secondname' WHERE `ID` = '$id'";
+    $sql = "INSERT INTO `users`(`name`, `surname`) VALUES ('$name','$secondname')";
     $result = $mysqli->query($sql);
     if ($result == TRUE) {
-      echo "Record updated successfully.";
+      echo "New record created successfully.";
       header('Location: index.php');
-    }else{
-      echo "Error:". $sql . "<br>". $conn->error;
     }
     $mysqli->close();
   }

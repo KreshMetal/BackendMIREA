@@ -1,34 +1,69 @@
-<html lang="en">
-<head>
-<title>People Database</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<h1>Таблица пользователей данного продукта</h1>
-<table style = " border: 1px solid grey; margin-left: auto; margin-right: auto;">
-    <tr><th>Id</th><th>Name</th><th>Surname</th></tr>
 <?php
-$mysqli = new mysqli("db", "user", "password", "appDB");
-$result = $mysqli->query("SELECT * FROM users");
-foreach ($result as $row){
-	?>
-	<tr>
-		<td> <?php echo $row['ID']; ?> </td>
-		<td> <?php echo $row['name']; ?> </td>
-		<td> <?php echo $row['surname']; ?> </td>
-		<td>
-			<a class="btn btn-info" href="update.php?id=<?php echo $row['ID']; ?>">Edit</a>
-			<a class="btn btn-danger" href="delete.php?id=<?php echo $row['ID']; ?>">Delete</a>
-		</td>
-	</tr>
-<?php
+error_reporting(0);
+header('Content-type: json/application');
+require 'functions.php';
+$con = new mysqli("db", "user", "password", "appDB");
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+$q = $_GET['q'];
+$params = explode('/', $q);
+
+$type = $params[0];
+$id = $params[1];
+
+if($method === 'GET'){
+  if ($type === "users"){
+    if(isset($id)){
+        getUser($con, $id);
+    }
+    else{
+        getUsers($con);    
+    }
+  }
+  elseif ($type == "comicses"){
+    if(isset($id)){
+        getComics($con, $id);
+    }
+    else{
+        getComicses($con);    
+    }
+  }  
+} 
+elseif ($method === "POST"){
+    if ($type === 'users'){
+        addUser($con, $_POST);
+    }
+    elseif ($type == "comicses"){
+        addComics($con, $_POST);
+    } 
+}
+elseif ($method === "PUT"){
+    if ($type === 'users'){
+        if(isset($id)){
+            $data = file_get_contents('php://input');
+            $json = json_decode($data);
+            updateUser($con, $id, $json);
+        }
+    }
+    elseif ($type == "comicses"){
+        if(isset($id)){
+            $data = file_get_contents('php://input');
+            $json = json_decode($data);
+            updateComics($con, $id, $json);
+        }
+    } 
+}
+elseif ($method === "DELETE"){
+    if ($type === 'users'){
+        if(isset($id)){
+            deleteUser($con, $id);
+        }
+    }
+    elseif ($type == "comicses"){
+        if(isset($id)){
+            deleteComics($con, $id);
+        }
+    } 
 }
 ?>
-
-<?php
-phpinfo();
-?>
-</table>
-</body>
-</html>

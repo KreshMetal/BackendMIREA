@@ -5,38 +5,25 @@ FLUSH PRIVILEGES;
 
 USE appDB;
 CREATE TABLE IF NOT EXISTS users (
-  ID INT(11) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(20) NOT NULL,
-  surname VARCHAR(40) NOT NULL,
-  PRIMARY KEY (ID)
+  login VARCHAR(100) NOT NULL,
+  bday VARCHAR(10) NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  PRIMARY KEY (login)
 );
 
-INSERT INTO users (name, surname)
-SELECT * FROM (SELECT 'Alex', 'Rover') AS tmp
-WHERE NOT EXISTS (
-    SELECT name FROM users WHERE name = 'Alex' AND surname = 'Rover'
-) LIMIT 1;
+INSERT INTO users VALUES ('XQC', '20.07.1932', '123'),
+                        ('Cake', '08.01.1999', '123'),
+                        ('Melharucos', '08.01.1989', '123');
 
-INSERT INTO users (name, surname)
-SELECT * FROM (SELECT 'Bob', 'Marley') AS tmp
-WHERE NOT EXISTS (
-    SELECT name FROM users WHERE name = 'Bob' AND surname = 'Marley'
-) LIMIT 1;
 
-INSERT INTO users (name, surname)
-SELECT * FROM (SELECT 'Alex', 'Rover') AS tmp
-WHERE NOT EXISTS (
-    SELECT name FROM users WHERE name = 'Alex' AND surname = 'Rover'
-) LIMIT 1;
+CREATE TABLE IF NOT EXISTS comicses (
+  comics_id int(11) NOT NULL AUTO_INCREMENT,
+  comics_name VARCHAR(100) NOT NULL,
+  comics_desc VARCHAR(100) NOT NULL,
+  PRIMARY KEY (comics_id)
+);
 
-INSERT INTO users (name, surname)
-SELECT * FROM (SELECT 'Kate', 'Yandson') AS tmp
-WHERE NOT EXISTS (
-    SELECT name FROM users WHERE name = 'Kate' AND surname = 'Yandson'
-) LIMIT 1;
 
-INSERT INTO users (name, surname)
-SELECT * FROM (SELECT 'Lilo', 'Black') AS tmp
-WHERE NOT EXISTS (
-    SELECT name FROM users WHERE name = 'Lilo' AND surname = 'Black'
-) LIMIT 1;
+INSERT INTO comicses VALUES (1, 'Naruto', 'Test desc'),
+                        (2, 'Tokyo Ghoul', 'Test desc'),
+                        (3, 'Jojo', 'Test desc');
