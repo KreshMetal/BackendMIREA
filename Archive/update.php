@@ -1,3 +1,21 @@
+<?php
+$mysqli = new mysqli("db", "user", "password", "appDB");
+if (isset($_POST['update'])) {
+    $id = $_GET['id'];
+    $name = $_POST['name'];
+    $secondname = $_POST['secondname'];
+    $sql = "UPDATE `users` SET `name` = '$name', `surname` = '$secondname' WHERE `ID` = '$id'";
+    $result = $mysqli->query($sql);
+    if ($result == TRUE) {
+        header('Location: index.php');
+        exit;
+    } else {
+        echo "Error:" . $sql . "<br>" . $conn->error;
+    }
+    $mysqli->close();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <title>Users Database</title>
@@ -15,6 +33,7 @@
   </fieldset>
 </form>
 </body>
+<<<<<<< HEAD:Archive/update.php
 </html>
 <?php
 $mysqli = new mysqli("db", "user", "password", "appDB");
@@ -31,3 +50,6 @@ $mysqli = new mysqli("db", "user", "password", "appDB");
     $mysqli->close();
   }
 ?>
+=======
+</html>
+>>>>>>> 6585ae6 (PR4):server/update.php
